@@ -1,0 +1,10 @@
+/target/
+cache.db.*
+.classpath
+.settings
+.project
+*.iml
+/.idea/
+*.out
+/logs/
+*.iml

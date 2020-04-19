@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="RollingLogFile" fileName="/local/mnt/workspace/assignment/logs/assignment.log"
+                     filePattern="/local/mnt/workspace/assignment/logs/assignment-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <pattern>%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+        <RollingFile name="JsonRollingLogFile" fileName="/local/mnt/workspace/assignment/logs/assignment.json"
+                     filePattern="/local/mnt/workspace/assignment/logs/assignment-%d{yyyy-MM-dd}-%i.json">
+            <SimpleJSONLayout properties="false">
+                <KeyValuePair key="application" value="logger-test"/>
+                <KeyValuePair key="module" value="api"/>
+                <KeyValuePair key="version" value="sys:app.version"/>
+                <KeyValuePair key="instance" value="sys:instance.name"/>
+                <KeyValuePair key="profile" value="sys:spring.profiles.active"/>
+            </SimpleJSONLayout >
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Root level="info">
+            <AppenderRef ref="RollingLogFile"/>
+            <AppenderRef ref="JsonRollingLogFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
