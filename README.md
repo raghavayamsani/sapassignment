@@ -30,7 +30,7 @@ kubectl create service clusterip demo --tcp=8080:8080 --dry-run -o=yaml >> deplo
 
 ```
 
-####Services
+#### Services
 All the API's which are exposed are authenticated with the SpringBoot Authentication.
 
 Below are multiple services in this application.
@@ -42,7 +42,7 @@ Below are multiple services in this application.
 4. /getStatsOnSales
 ```
 
-######NOTE:- For all the API's Basic Authentication is Mandatory.
+###### NOTE:- For all the API's Basic Authentication is Mandatory.
 
 ##### /ingest/salesDetails
 This is the POST Method where we can ingest the Sales Transactions.
