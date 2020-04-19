@@ -5,20 +5,29 @@
 
 1. Go to Docker File and build it using this command
  ```
- docker build -t sapassignmentdemo -f Dockerfile . 
+ docker build -t {dockerhubusername}/sapassignment -f Dockerfile . 
  ```
 2. Image will be created, If you want to run and validate it. 
 ```
- docker run -p 8080:8080 sapassignment
+ docker run -p 8080:8080 {dockerhubysername}/sapassignment
 ```
 3. Once the Docker Image is created push this to Docker Hub.
 ```
-docker push {dockerhubusername}/sapassignment
+docker push {dockerhubusername}/sapassignment:latest
 ```
 4.Create the Kubernetes Deployment file and deploy it in K8 Cluster.
 ```
 export KUBECONFIG = "Configuration File"
 kubectl apply -f deployment.yaml
+```
+##### How to Create Deployment file
+```
+kubectl create deployment demo --image={dockerhubname}/sapassignment --dry-run -o=yaml > deployment.yaml
+
+echo --- >> deployment.yaml
+
+kubectl create service clusterip demo --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml
+
 ```
 
 ####Services
