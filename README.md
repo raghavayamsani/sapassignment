@@ -175,3 +175,7 @@ validates the Basic Authentication and it expects 200 Response code.
 If we want we can also validate with the data in future.
 
 
+#### Notebooks
+Python Code is written in a notebook to generate a sample ingestion data.
+
+
