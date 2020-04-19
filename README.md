@@ -171,7 +171,11 @@ Output:
 
 ```
 
+#### Logging
 
+Both Text Logs and JSON Logs will be generated and will write to a logs folder. 
+
+JSON Logs can be used to push this logs easily into ELK/Splunk and do analytics on top it for production purposes.
 
 
 
@@ -182,6 +186,8 @@ All the test cases are the basic unit test cases which will check if the API is 
 validates the Basic Authentication and it expects 200 Response code.
 
 If we want we can also validate with the data in future.
+
+All the API's can be integrated into JMETER to get the exact timing of each API.
 
 
 #### Notebooks
