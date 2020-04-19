@@ -25,16 +25,19 @@ public class Controller {
     @Autowired
     Service service;
 
-    private static final Logger LOG = LogManager.getLogger(Bootstrap.class);
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     @RequestMapping(path = "/ingest/salesDetails", method = RequestMethod.POST)
     public ResponseEntity<Response<String>> salesDetailsIngestion(@RequestBody List<SalesDetails> salesDetails)
     {
         Response response = new Response();
-        String status = service.saveSalesDetails(salesDetails);
+        Map<String,Object> outMap = service.saveSalesDetails(salesDetails);
         response.setCode(40001);
-        response.setMessage(status);
-        response.setStatus(AppConstants.SUCCESS);
+        if (outMap.get(AppConstants.STATUS).toString().equals(AppConstants.SUCCESS)){
+            response.setData(outMap.get(AppConstants.DATA));
+        }
+        response.setMessage(outMap.get(AppConstants.MESSAGE).toString());
+        response.setStatus(outMap.get(AppConstants.STATUS).toString());
         return new ResponseEntity<Response<String>>(response, HttpStatus.OK);
     }
 
@@ -42,24 +45,44 @@ public class Controller {
     public ResponseEntity<Response<String>> getSalesDetailsByDealAmount(@RequestParam(required = false,defaultValue = "AREA") String type)
     {
         Response response = new Response();
-        Map<Integer, Double> salesDetails = service.getSalesDetailsByDealAmount(type);
-        response.setData(salesDetails);
-        response.setStatus(AppConstants.SUCCESS);
+        Map<String, Object> outMap = service.getSalesDetailsByDealAmount(type);
+        if (outMap.get(AppConstants.STATUS).toString().equals(AppConstants.SUCCESS)){
+            response.setData(outMap.get(AppConstants.DATA));
+        }
+        response.setMessage(outMap.get(AppConstants.MESSAGE).toString());
+        response.setStatus(outMap.get(AppConstants.STATUS).toString());
         response.setCode(40002);
-        response.setMessage("Fetch Data for " + type + " Successfully");
         return new ResponseEntity<Response<String>>(response, HttpStatus.OK);
     }
 
     @RequestMapping(path ="/getSalesDetailsByType", method = RequestMethod.GET)
-    public ResponseEntity<Response<String>> getSalesByProduct(@RequestParam(required = false,defaultValue = "AREA-PRODUCT") String type)
+    public ResponseEntity<Response<String>> getSalesByType(@RequestParam(required = false,defaultValue = "AREA_PRODUCT") String type)
     {
         Response response = new Response();
-        Map<Integer, Map<Integer,Double>> salesDetails = service.getSalesByProduct(type);
-        response.setData(salesDetails);
-        response.setStatus(AppConstants.SUCCESS);
+        Map<String, Object> outMap = service.getSalesByProduct(type);
+        if (outMap.get(AppConstants.STATUS).toString().equals(AppConstants.SUCCESS)){
+            response.setData(outMap.get(AppConstants.DATA));
+        }
+        response.setMessage(outMap.get(AppConstants.MESSAGE).toString());
+        response.setStatus(outMap.get(AppConstants.STATUS).toString());
         response.setCode(40003);
-        response.setMessage("Fetched Data for " + type + " Successfully");
         return new ResponseEntity<Response<String>>(response, HttpStatus.OK);
     }
+
+    @RequestMapping(path ="/getStatsOnSales", method = RequestMethod.GET)
+    public ResponseEntity<Response<String>> getStatsonSales(@RequestParam(required = false,defaultValue = "AMOUNT") String type)
+    {
+        Response response = new Response();
+        Map<String, Object> outMap = service.getTopAndLeastByType(type);
+        if (outMap.get(AppConstants.STATUS).toString().equals(AppConstants.SUCCESS)){
+            response.setData(outMap.get(AppConstants.DATA));
+        }
+        response.setMessage(outMap.get(AppConstants.MESSAGE).toString());
+        response.setStatus(outMap.get(AppConstants.STATUS).toString());
+        response.setCode(40004);
+        return new ResponseEntity<Response<String>>(response, HttpStatus.OK);
+    }
+
+
 
 }

@@ -10,9 +10,13 @@ public interface Service {
 
 
 
-    public String saveSalesDetails(List<SalesDetails> salesDetails);
+    public Map<String,Object> saveSalesDetails(List<SalesDetails> salesDetails);
 
-    public Map<Integer, Double> getSalesDetailsByDealAmount(String type);
+    public Map<String,Object> getSalesDetailsByDealAmount(String type);
 
-    public Map<Integer,Map<Integer,Double>> getSalesByProduct(String type);
+    public Map<String,Object> getSalesByProduct(String type);
+
+    public Map<Integer,Double> calculateSalesByType(List<SalesDetails> salesDetailsList,String type);
+
+    public Map<String,Object> getTopAndLeastByType(String type);
 }
